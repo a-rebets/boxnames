@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from "tailwindcss/defaultTheme";
+
 export default {
 	darkMode: "selector",
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -12,6 +14,9 @@ export default {
 			},
 		},
 		extend: {
+			fontFamily: {
+				game: ["'Playpen Sans Variable'", ...defaultTheme.fontFamily.sans],
+			},
 			colors: {
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",

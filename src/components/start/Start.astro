@@ -1,7 +1,8 @@
 ---
 import logo from "@/assets/game_logo.svg?raw";
 import { Button } from "@/components/ui/button";
-import GamePin from "./GamePin";
+import GameCode from "./GameCode";
+import { GamePinDialog } from "./GamePin";
 interface Props {
     name: string;
     avatar: string;
@@ -23,11 +24,12 @@ const { avatar, name } = Astro.props;
             class="max-w-32 truncate">{name}</span
         ></Button
     >
-    <GamePin className="col-span-4" client:load />
+    <GameCode className="col-span-4" client:load />
     <span class="col-span-4 text-center italic">or</span>
-    <Button
-        className="bg-box-800 hover:bg-box-900 dark:bg-box-700 dark:hover:bg-box-800 dark:text-neutral-50 rounded-full text-sm h-8 col-span-2 col-start-2"
-    >
-        Create game
-    </Button>
+    <GamePinDialog
+        isNewGame={true}
+        client:load
+        buttonClasses="bg-box-800 hover:bg-box-900 dark:bg-box-700 dark:hover:bg-box-800 dark:text-neutral-50 rounded-full text-sm h-8 col-span-2 col-start-2"
+        buttonText="Create game"
+    />
 </div>
