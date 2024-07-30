@@ -10,7 +10,8 @@ async function createGame(gameCode: number, gamePin: number, userData: string) {
 	const userHash = hashUserData(userData);
 	const { data, error } = await supabase
 		.from("games")
-		.insert([{ game_code: gameCode, game_pin: gamePin, user_hash: userHash }]);
+		.insert([{ game_code: gameCode, game_pin: gamePin, user_hash: userHash }])
+		.select();
 
 	if (error) {
 		console.error("Error creating game:", error);
@@ -40,7 +41,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 			status: 500,
 		});
 	}
-	console.log(data);
 	const newCookie = `${newGameCode}|${gamePin}`;
 	return new Response(JSON.stringify({ newGameCode: gamePin }), {
 		headers: {

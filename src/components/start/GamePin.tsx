@@ -21,7 +21,7 @@ import {
 	FormMessage,
 	FormDescription,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
+import { toast, type Toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
@@ -39,54 +39,36 @@ const formSchema = z.object({
 		}),
 });
 
-export function GamePinDialog({
-	game_code,
-	isNewGame,
-	buttonClasses,
-	buttonText,
-	buttonEnabled = true,
-	buttonLoading = false,
-}: {
-	game_code?: string;
-	isNewGame?: boolean;
-	buttonClasses?: string;
-	buttonText?: string;
-	buttonEnabled?: boolean;
-	buttonLoading?: boolean;
-}) {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		mode: "onChange",
-		defaultValues: {
-			pin: "",
-		},
-	});
+const failedCreationToast: Toast = {
+	description: "Failed to create the game :(",
+	variant: "destructive",
+};
 
-	const title = isNewGame
-		? "Create a pin for the game"
-		: "Enter the pin for the game";
-
-	async function createGame({ pin }: z.infer<typeof formSchema>) {
-		try {
-			const response = await fetch("/api/create", {
-				method: "POST",
-				body: JSON.stringify({ pin }),
-			});
-			const data = await response.json();
-			console.log(data);
+async function createGame({ pin }: z.infer<typeof formSchema>) {
+	try {
+		const response = await fetch("/api/create", {
+			method: "POST",
+			body: JSON.stringify({ pin }),
+		});
+		if (response.ok) {
 			toast({
 				description: "Game created successfully!",
 				variant: "success",
 			});
-		} catch (error) {
-			toast({
-				description: "Failed to create the game :(",
-				variant: "destructive",
-			});
+			setTimeout(() => {
+				window.location.href = "/game";
+			}, 1000);
+		} else {
+			toast(failedCreationToast);
 		}
+	} catch (error) {
+		toast(failedCreationToast);
 	}
+}
 
-	async function joinGame({ pin }: z.infer<typeof formSchema>) {
+const getJoinGameHandler =
+	(game_code?: string) =>
+	async ({ pin }: z.infer<typeof formSchema>) => {
 		try {
 			const response = await fetch("/api/join", {
 				method: "POST",
@@ -120,7 +102,34 @@ export function GamePinDialog({
 				variant: "destructive",
 			});
 		}
-	}
+	};
+
+export function GamePinDialog({
+	game_code,
+	isNewGame,
+	buttonClasses,
+	buttonText,
+	buttonEnabled = true,
+	buttonLoading = false,
+}: {
+	game_code?: string;
+	isNewGame?: boolean;
+	buttonClasses?: string;
+	buttonText?: string;
+	buttonEnabled?: boolean;
+	buttonLoading?: boolean;
+}) {
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		mode: "onChange",
+		defaultValues: {
+			pin: "",
+		},
+	});
+
+	const title = isNewGame
+		? "Create a pin for the game"
+		: "Enter the pin for the game";
 
 	return (
 		<Dialog>
@@ -137,7 +146,9 @@ export function GamePinDialog({
 			<DialogContent className="sm:max-w-[425px]">
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit(isNewGame ? createGame : joinGame)}
+						onSubmit={form.handleSubmit(
+							isNewGame ? createGame : getJoinGameHandler(game_code),
+						)}
 						className="space-y-8"
 					>
 						<DialogHeader>
