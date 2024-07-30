@@ -1,0 +1,33 @@
+---
+import logo from "@/assets/game_logo.svg?raw";
+import { Button } from "@/components/ui/button";
+import GamePin from "./GamePin";
+interface Props {
+    name: string;
+    avatar: string;
+}
+const { avatar, name } = Astro.props;
+---
+
+<div
+    class="max-w-xl grid grid-cols-4 pb-20 gap-x-10 gap-y-8 place-items-center"
+>
+    <div class="col-span-2 col-start-2 min-w-64 pb-10">
+        <Fragment set:html={logo} />
+    </div>
+    <h1 class="text-2xl font-bold col-span-2">Welcome back!</h1>
+    <Button
+        variant="outline"
+        className="col-span-2 rounded-full text-lg py-6 px-8 hover:dark:bg-neutral-900"
+        ><span class="mr-2 text-xl">{avatar}</span><span
+            class="max-w-32 truncate">{name}</span
+        ></Button
+    >
+    <GamePin className="col-span-4" client:load />
+    <span class="col-span-4 text-center italic">or</span>
+    <Button
+        className="bg-box-800 hover:bg-box-900 dark:bg-box-700 dark:hover:bg-box-800 dark:text-neutral-50 rounded-full text-sm h-8 col-span-2 col-start-2"
+    >
+        Create game
+    </Button>
+</div>
