@@ -1,0 +1,102 @@
+[
+    {
+        "icon": "🐶",
+        "label": "Dog",
+        "value": "dog"
+    },
+    {
+        "icon": "🐱",
+        "label": "Cat",
+        "value": "cat"
+    },
+    {
+        "icon": "🐰",
+        "label": "Rabbit",
+        "value": "rabbit"
+    },
+    {
+        "icon": "🐬",
+        "label": "Dolphin",
+        "value": "dolphin"
+    },
+    {
+        "icon": "🐙",
+        "label": "Octopus",
+        "value": "octopus"
+    },
+    {
+        "icon": "🦄",
+        "label": "Unicorn",
+        "value": "unicorn"
+    },
+    {
+        "icon": "🐼",
+        "label": "Panda",
+        "value": "panda"
+    },
+    {
+        "icon": "🐸",
+        "label": "Frog",
+        "value": "frog"
+    },
+    {
+        "icon": "🐵",
+        "label": "Monkey",
+        "value": "monkey"
+    },
+    {
+        "icon": "🐺",
+        "label": "Wolf",
+        "value": "wolf"
+    },
+    {
+        "icon": "🦊",
+        "label": "Fox",
+        "value": "fox"
+    },
+    {
+        "icon": "🐻",
+        "label": "Bear",
+        "value": "bear"
+    },
+    {
+        "icon": "🐯",
+        "label": "Tiger",
+        "value": "tiger"
+    },
+    {
+        "icon": "🦋",
+        "label": "Butterfly",
+        "value": "butterfly"
+    },
+    {
+        "icon": "🦜",
+        "label": "Parrot",
+        "value": "parrot"
+    },
+    {
+        "icon": "🦀",
+        "label": "Crab",
+        "value": "crab"
+    },
+    {
+        "icon": "🦉",
+        "label": "Owl",
+        "value": "owl"
+    },
+    {
+        "icon": "🦆",
+        "label": "Duck",
+        "value": "duck"
+    },
+    {
+        "icon": "🐧",
+        "label": "Penguin",
+        "value": "penguin"
+    },
+    {
+        "icon": "🐍",
+        "label": "Snake",
+        "value": "snake"
+    }
+]
