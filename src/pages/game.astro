@@ -1,0 +1,19 @@
+---
+import General from "@/layouts/General.astro";
+let [gameId, password] = ["", ""];
+if (Astro.cookies.has("game")) {
+    const cookie = Astro.cookies.get("game");
+    const data = cookie?.value.split("|") || [];
+    if (data.length === 2) {
+        gameId = data[0];
+        password = data[1];
+    }
+}
+if (!gameId || !password) {
+    return Astro.redirect("/");
+}
+---
+
+<General mainClasses="flex flex-col items-center justify-center">
+    <h1>Game {gameId}</h1>
+</General>
