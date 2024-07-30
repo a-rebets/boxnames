@@ -68,7 +68,7 @@ const GameCode = ({ className }: { className?: string }) => {
 			className={cn("flex flex-col gap-4 w-full px-12 items-center", className)}
 		>
 			<Separator />
-			<h2 className="text-base text-center pt-6">Enter the game pin</h2>
+			<h2 className="text-base text-center pt-6">Enter the game code</h2>
 			<InputOTP
 				maxLength={6}
 				pattern={REGEXP_ONLY_DIGITS}
