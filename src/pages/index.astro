@@ -1,68 +1,37 @@
 ---
-import "@/styles/globals.css";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import logo from "@/assets/game_logo.svg?raw";
+import Onboarding from "@/components/onboarding/Onboarding.astro";
+import Start from "@/components/start/Start.astro";
+import General from "@/layouts/General.astro";
+import avatarList from "@/assets/avatars.json";
+let [name, avatar] = ["", ""];
+
+if (Astro.cookies.has("user")) {
+	const cookie = Astro.cookies.get("user");
+	const data = cookie?.value.split("|") || [];
+	if (data.length === 2) {
+		avatar = data[0];
+		name = data[1];
+	}
+}
+if (avatar) {
+	avatar = avatarList.find((a) => a.value === avatar)?.icon || "";
+}
 ---
 
-<script is:inline>
-	const getThemePreference = () => {
-		if (
-			typeof localStorage !== "undefined" &&
-			localStorage.getItem("theme")
-		) {
-			return localStorage.getItem("theme");
+<General mainClasses="flex flex-col items-center justify-center">
+	{name ? <Start name={name} avatar={avatar} /> : <Onboarding />}
+	<style is:global>
+		svg #box {
+			fill: #0071f7;
 		}
-		return window.matchMedia("(prefers-color-scheme: dark)").matches
-			? "dark"
-			: "light";
-	};
-	const isDark = getThemePreference() === "dark";
-	document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-
-	if (typeof localStorage !== "undefined") {
-		const observer = new MutationObserver(() => {
-			const isDark = document.documentElement.classList.contains("dark");
-			localStorage.setItem("theme", isDark ? "dark" : "light");
-		});
-		observer.observe(document.documentElement, {
-			attributes: true,
-			attributeFilter: ["class"],
-		});
-	}
-</script>
-
-<style is:global>
-	svg #box {
-		fill: #0071f7;
-	}
-	svg #names path {
-		stroke: black;
-	}
-	html.dark svg #box {
-		fill: white;
-	}
-	html.dark svg #names path {
-		stroke: #66acff;
-	}
-</style>
-
-<html lang="en" class="w-full">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Boxnames - the game</title>
-	</head>
-	<body class="w-full dark:bg-neutral-800">
-		<main class="w-full flex flex-col items-center justify-center h-screen">
-			<div class="w-72 h-72">
-				<Fragment set:html={logo} />
-			</div>
-			<p class="text-xl animate-bounce dark:text-neutral-50">
-				Please stand by...
-			</p>
-			<ThemeToggle client:load />
-		</main>
-	</body>
-</html>
+		svg #names path {
+			stroke: black;
+		}
+		html.dark svg #box {
+			fill: white;
+		}
+		html.dark svg #names path {
+			stroke: #66acff;
+		}
+	</style>
+</General>

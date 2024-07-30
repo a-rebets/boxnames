@@ -1,0 +1,31 @@
+---
+import LogoAnimation from "@/components/onboarding/LogoAnimation";
+import LottieAnimation from "astro-integration-lottie/Lottie.astro";
+import logo from "@/assets/game_logo.svg?raw";
+import OnboardingCarousel from "@/components/onboarding/OnboardingCarousel";
+---
+
+<div
+    class="pb-40 w-72 h-fit relative group-[.intro-off]:hidden group-[.intro-done]:scale-[2] group-[.intro-done]:translate-y-12 transition-all duration-1000 opacity-100 group-[.intro-done]:opacity-0"
+>
+    <div class="group-[.dark]:hidden">
+        <LottieAnimation
+            src="/logo_light.json"
+            autoplay={false}
+            loop={false}
+            id="logo-animation-l"
+        />
+    </div>
+    <div class="hidden group-[.dark]:block">
+        <LottieAnimation
+            src="/logo_dark.json"
+            autoplay={false}
+            loop={false}
+            id="logo-animation-d"
+        />
+    </div>
+    <LogoAnimation client:load>
+        <Fragment set:html={logo} />
+    </LogoAnimation>
+</div>
+<OnboardingCarousel client:load />
